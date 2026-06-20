@@ -19,3 +19,17 @@ services:
     depends_on:
       - backend
 
+  detection:
+    build:
+      context: ./queue-detection
+      dockerfile: Dockerfile.detection
+    ports:
+      - "5050:5050"
+    environment:
+      - BACKEND_URL=http://backend:3000
+    privileged: true
+    volumes:
+      - /run/udev:/run/udev:ro
+    depends_on:
+      - backend
+
