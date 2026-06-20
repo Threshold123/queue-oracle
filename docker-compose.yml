@@ -1,20 +1,21 @@
-
 services:
   backend:
     build:
       context: .
       dockerfile: Dockerfile.backend
     ports:
-    - "3000:3000"
+      - "3000:3000"
     volumes:
-    - ./queue.db:/app/queue.db
+      - ./queue.db:/app/queue.db
+      - ./model.pkl:/app/model.pkl
+      - ./forecast.json:/app/forecast.json
 
   frontend:
     build:
       context: ./frontend/queu-frontend
       dockerfile: Dockerfile.frontend
     ports:
-    - "5173:5173"
+      - "5173:5173"
     depends_on:
       - backend
 
@@ -22,5 +23,11 @@ services:
     build:
       context: ./queue-detection
       dockerfile: Dockerfile.detection
+    ports:
+      - "5050:5050"
+    environment:
+      - BACKEND_URL=http://backend:3000
+    devices:
+      - /dev/video0:/dev/video0
     depends_on:
       - backend

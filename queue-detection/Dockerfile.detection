@@ -11,6 +11,5 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt --timeout 300
 
 COPY detect.py .
-COPY test_queue.mp4 .
 
 CMD ["python", "detect.py"]
