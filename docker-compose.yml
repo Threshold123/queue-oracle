@@ -19,15 +19,3 @@ services:
     depends_on:
       - backend
 
-  detection:
-    build:
-      context: ./queue-detection
-      dockerfile: Dockerfile.detection
-    ports:
-      - "5050:5050"
-    environment:
-      - BACKEND_URL=http://backend:3000
-    devices:
-      - /dev/video0:/dev/video0
-    depends_on:
-      - backend

@@ -67,19 +67,18 @@ def video_feed():
 def detection_loop():
     global latest_frame, people_count
 
-    cap = cv2.VideoCapture(0)
-    if not cap.isOpened():
-        print("Camera not available — falling back to test video")
-        cap = cv2.VideoCapture("test_queue.mp4")
-
+    from picamera2 import Picamera2
+    picam2 = Picamera2()
+    picam2.configure(picam2.create_preview_configuration(
+        main={"size": (1280, 720), "format": "RGB888"}
+    ))
+    picam2.start()
     print("Detection started…")
     last_post = 0
 
     while True:
-        ret, frame = cap.read()
-        if not ret:
-            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            continue
+        frame_rgb = picam2.capture_array()
+        frame = cv2.cvtColor(frame_rgb, cv2.COLOR_RGB2BGR)
 
         results = model(frame, classes=[0], verbose=False, conf=0.25)[0]
         count = len(results.boxes)
