@@ -1,0 +1,26 @@
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+    - "3000:3000"
+    volumes:
+    - ./queue.db:/app/queue.db
+
+  frontend:
+    build:
+      context: ./frontend/queu-frontend
+      dockerfile: Dockerfile.frontend
+    ports:
+    - "5173:5173"
+    depends_on:
+      - backend
+
+  detection:
+    build:
+      context: ./queue-detection
+      dockerfile: Dockerfile.detection
+    depends_on:
+      - backend

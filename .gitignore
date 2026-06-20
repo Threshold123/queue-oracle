@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+queue-detection/venv/
+
+# Model weights & large binaries
+*.pt
+*.onnx
+*.mp4
+*.pkl
+
+# Runtime / generated
+queue.db
+forecast.json
+
+# Frontend build output
+frontend/queu-frontend/dist/
+
+# OS
+.DS_Store
