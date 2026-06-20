@@ -77,7 +77,7 @@ export default function App() {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch("http://localhost:3000/status")
+      fetch("/api/status")
         .then((res) => res.json())
         .then((data) => {
           setLocations(data);
@@ -103,7 +103,7 @@ export default function App() {
           });
         });
 
-      fetch("http://localhost:3000/forecast")
+      fetch("/api/forecast")
         .then((res) => res.json())
         .then((data) => setForecast(data))
         .catch(() => setForecast([]));
